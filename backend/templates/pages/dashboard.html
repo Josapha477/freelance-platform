@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}create profile{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+
+    <!--main-->
+{% block content %}
+    <main class="max-w-6xl mx-auto px-4 py-8">
+
+        <!-- 1. HERO + PHOTO PROFIL -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-12">
+            <div class="md:flex">
+                <div class="md:w-1/3 bg-blue-50 p-8 flex items-center justify-center">
+                    <div class="w-48 h-48 bg-blue-200 rounded-full border-4 border-white shadow-lg flex items-center justify-center">
+                        <span class="text-6xl">👨‍💻</span>
+                    </div>
+                </div>
+                <div class="md:w-2/3 p-8">
+                    <h1 class="text-3xl font-bold mb-2">{{profile.first_name}} {{profile.last_name}}</h1>
+                    <p class="text-blue-600 font-semibold mb-4">graphist designer depuis
+                         {{profile.year_experience}} ans</p>
+                    <p class="text-gray-600 mb-4">
+                        Ancien lead developer, j'ai accompagné plus de 30 projets de leur conception 
+                        à leur mise en production. Ma spécialité : des backends robustes qui tiennent la charge.
+                    </p>
+                    <div class="flex gap-4">
+                        <span class="text-sm text-gray-500">📍 {{profile.country}}</span>
+                        <span class="text-sm text-green-600">✓ Disponible maintenant</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. BADGES CONFIANCE -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <div class="bg-white p-4 rounded-lg text-center shadow-sm">
+                <div class="text-2xl mb-1">📋</div>
+                <p class="font-semibold text-sm">Devis gratuit</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg text-center shadow-sm">
+                <div class="text-2xl mb-1">🔒</div>
+                <p class="font-semibold text-sm">Confidentialité</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg text-center shadow-sm">
+                <div class="text-2xl mb-1">⚡</div>
+                <p class="font-semibold text-sm">Délais tenus</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg text-center shadow-sm">
+                <div class="text-2xl mb-1">💬</div>
+                <p class="font-semibold text-sm">Support 24h</p>
+            </div>
+        </div>
+
+        <!-- 3. PROJETS RÉCENTS -->
+        <h2 class="text-2xl font-bold mb-6">🛠️ Projets récents</h2>
+        <div class="space-y-4 mb-12">
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="font-semibold">API pour application de livraison</h3>
+                        <p class="text-sm text-gray-500 mb-2">DelivExpress - 2024</p>
+                        <div class="flex gap-2">
+                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">+2000 req/s</span>
+                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">99.9% uptime</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="font-semibold">Migration base de données e-commerce</h3>
+                        <p class="text-sm text-gray-500 mb-2">ModeShop - 2023</p>
+                        <div class="flex gap-2">
+                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">-70% temps</span>
+                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">2M produits</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. TÉMOIGNAGES -->
+        <h2 class="text-2xl font-bold mb-6">💬 Ce que disent mes clients</h2>
+        <div class="grid md:grid-cols-2 gap-6 mb-12">
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <p class="text-gray-600 italic mb-4">
+                    "Thomas a repris notre backend, en 2 mois l'API est 3 fois plus rapide. Professionnel."
+                </p>
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">S</div>
+                    <div class="ml-3">
+                        <p class="font-semibold">Sophie Bernard</p>
+                        <p class="text-sm text-gray-500">Fondatrice TechStore</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <p class="text-gray-600 italic mb-4">
+                    "Une archive de confiance. Notre base tient 10x plus de requêtes grâce à lui."
+                </p>
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">M</div>
+                    <div class="ml-3">
+                        <p class="font-semibold">Marc Dubois</p>
+                        <p class="text-sm text-gray-500">CTO HealthApp</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. CONTACT -->
+        <div class="text-center bg-white p-8 rounded-xl shadow-sm">
+            <h2 class="text-2xl font-bold mb-2">Besoin d'un backend solide ?</h2>
+            <p class="text-gray-600 mb-6">Parlons de votre projet en toute simplicité</p>
+            <a href="#" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700">
+                Me contacter
+            </a>
+            <p class="text-sm text-gray-400 mt-4">Réponse sous 24h</p>
+        </div>
+
+    </main>
+{% endblock %}
+
+
+
+{% block extra_js %}
+
+{% endblock %}

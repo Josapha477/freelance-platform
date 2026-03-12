@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}liste projets{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+{% block content %}
+<div class="font-serif leading-normal tracking-normal w-full pl-5 pr-5 pt-20">
+    
+   {% if proposals %}
+    <div class="grid md:grid-cols-3 gap-10">
+
+      {% for proposal in proposals %}
+      <div class="bg-white shadow rounded-xl gap-5 w-full h-auto p-10">
+        <h3 class="font-semibold mb-4">proposer par : {{proposal.freelancer.profile_freelance.first_name}}</h3>
+        <p class="text-gray-600">
+          prix proposer : {{proposal.proposed_budget}} gourdes
+        </p>
+        
+        {% if proposal.is_accepted == True %}
+
+         <div>
+          <a href="{% url 'jobs:contract_client_detail' proposal.id %}">voire le contract</a>
+         </div> 
+
+        {% else %}
+            <form method="post" class="flex w-full" action="{% url 'jobs:create_contract' proposal.id %}">
+                {% csrf_token %}
+                <button type="submit" class="w-full h-10 bg-blue-500 rounded border-none hover:bg-blue-700">Acceptez</button>
+            </form>
+        {% endif %}
+      </div>
+         {% endfor %} 
+    </div>
+
+  {% else %}
+   <div>
+   <h1 class="font-bold text-5xl">Aucun proposition disponible pour ce projet</h1>
+   </div>
+
+  {% endif %} 
+</div>
+
+{% endblock %}

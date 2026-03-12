@@ -16,27 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from django.urls import include, re_path
-from django.contrib import admin
-from django.views.generic import RedirectView, TemplateView
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
-
-schema_view = get_schema_view(
-    openapi.Info(
-        title='API Docs',
-        default_version='v1',
-    )
-)
+from django.views.decorators.csrf import csrf_exempt
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^dj-rest-auth/', include('dj_rest_auth.urls')),
-    re_path(r'^dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
-    re_path(r'^account/', include('allauth.urls')),
-    re_path(r'^admin/', admin.site.urls),
-    re_path(r'^accounts/profile/$', RedirectView.as_view(url='/', permanent=True), name='profile-redirect'),
-    re_path(r'^docs/$', schema_view.with_ui('swagger', cache_timeout=0), name='api_docs')
+    path('accounts/', include("allauth.urls")),
+    path("", include("jobs.urls")),
+    path("", include("accounts.urls")),
+    path("", include("messaging.urls")),
 ]
 

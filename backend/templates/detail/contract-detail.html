@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}create profile{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+
+   
+{% block content %}
+    <main class="w-full max-w-6xl mx-auto px-4 py-8 pt-30">
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-12 p-10 w-full">
+            <div class="md:flex flex-col gap-10">
+                <p>{{contract.project.title}}</p>
+                <p>{{contract.created_at}}</p> 
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+
+
+{% block extra_js %}
+
+{% endblock %}

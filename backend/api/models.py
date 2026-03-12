@@ -1,3 +1,11 @@
 from django.db import models
+from django.conf import settings
 
-# Create your models here.
+
+class AvisUser(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, 
+    on_delete=models.CASCADE, related_name="user_avi")
+    title = models.CharField(default="")
+    content = models.TextField(default="")
+    created_at = models.DateTimeField(auto_now_add=True)
+    

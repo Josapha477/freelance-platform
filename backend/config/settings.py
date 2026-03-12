@@ -32,8 +32,20 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+ADMINS = (
+    ('midley', 'midleyjoseph@gmail.com')
+)
+
+MANAGERS = ADMINS
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Application definition
+
+
+TAILWIND_APP_NAME = "theme"
+
+INTERNAL_IPS = ["127.0.0.1"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,63 +54,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Application metiers
+
+    
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.mfa',
+    'allauth.socialaccount.providers.google',
+
     'api',
     'accounts',
     'jobs',
     'messaging',
 
-    # Librairie
-    'django.contrib.sites',
-    'rest_framework',
-    'rest_framework.authtoken',
-    'dj_rest_auth',
-    'allauth',
-    'allauth.account',
-    'dj_rest_auth.registration',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'drf_yasg',
-    'corsheaders'
 ]
 
-REST_AUTH = {
-    'SESSION_LOGIN': True,
-    'USE_JWT': True,
-    'JWT_AUTH_COOKIE': 'auth',
-    'JWT_AUTH_HTTPONLY': False,
-}
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SITE_ID = 1
-ACCOUNT_SIGNUP_FIELDS = {
-    'email': True,
-    'username': True,
-    'phone': True,
-}
 
-ACCOUNT_LOGIN_METHODS = {'email': True }
-
-ACCOUNT_EMAIL_VERIFICATION = 'optional'
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
-    ),
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
-}
-
-SWAGGER_SETTINGS = {
-    'LOGIN_URL': 'login',
-    'LOGOUT_URL': 'logout',
-}
-
-CORS_ORIGIN_ALLOW_ALL = True
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -106,7 +80,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -114,7 +88,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -176,5 +150,45 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-CORS_ALLOWS_CRETENTIALS = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
+
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+ACCOUNT_FORMS = {
+    "signup": "accounts.forms.formsUser.CustomSignupForm"
+}
+
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+LOGIN_URL = "/accounts/login/"
+
+AUTH_USER_MODEL = "accounts.CustomUser"
+
+ACCOUNT_LOGIN_BY_CODE_ENABLED = True
+
+ACCOUNT_EMAIL_VERIFICATION =  'mandatory'
+
+ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = True
+
+ACCOUNT_LOGIN_METHODS = {
+    "email",
+}
+ACCOUNT_PASSWORD_RESET_BY_CODE_ENABLED = True
+ACCOUNT_SIGNUP_FIELDS = [
+'email*', "password1*", "password2*"
+]
+
+
+
+

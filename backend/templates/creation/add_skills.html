@@ -1,0 +1,66 @@
+
+
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}creation project{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+{% block content %}
+
+{% if user.user_types == "freelance" %}
+ <div class="mx-auto font-bold w-full ">
+     <div class="bg-white rounded-lg shadow-md p-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Liste de competences disponible</h2>
+            <form  method="post" >
+                        {% csrf_token %}
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 md:space-x-2">
+                 
+                    {% for skill in skills %}
+                    <div class="mb-6">
+                        <div class=" text-gray-700 text-sm font-bold mb-2 flex gap-10">
+                               <label
+                                class="w-full px-3 py-2 border border-gray-300 
+                                rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 flex 
+                                justify-between">
+                                <div class="flex gap-5">
+                                    {{skill.name}}   
+                                    <input type="checkbox" value="{{skill.id}}" name="skills_pk">
+                                </div>
+                                    <a href="#" class="text-red-300">Vois plus <span>+</span></a>
+                                </label> 
+                        </div>
+                         </div>    
+                    {% endfor %}
+                </div>
+                </div>
+    
+                <div class="flex items-center justify-center ">
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md">
+                           Enregistrer
+                        </button>
+                </div>
+                    </form>
+                    <p class="mt-4 text-center text-sm text-gray-600">
+                        <a href="/" class="text-indigo-600 hover:text-indigo-800 font-medium">
+                            Retour
+                        </a>
+                    </p>
+                </div>
+            </div>
+            {% else %}
+
+            <div class="flex items-center justify-center">
+                <h1 class="text-5xl">
+                    Non autoriser
+                </h1>
+            </div>
+
+        {% endif %}
+
+{% endblock %}

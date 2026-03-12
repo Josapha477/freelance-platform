@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}liste projets{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+{% block content %}
+<div class="flex flex-col font-serif leading-normal tracking-normal 
+w-full pt-25 px-4 items-center justify-center min-h-screen">
+
+  <div class="flex flex-wrap md:gap-40 gap-4 items-center">
+      <button class="w-30 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-950">Tous ({{projects.count}})</button>
+      <button class="w-30 bg-violet-800 text-white py-2 rounded-lg hover:bg-violet-500">web (0)</button>
+      <button class="w-30 bg-lime-700 text-white py-2 rounded-lg hover:bg-lime-950">Designer (0)</button>
+      <button class="w-30 bg-cyan-600 hover:bg-cyan-950 text-white py-2 rounded-lg">Video (0)</button>
+  </div>
+
+
+<section class="py-20 px-4 w-full">
+
+<div class="grid md:grid-cols-3 gap-8 w-full">
+
+      {% for project in projects %}
+ 
+<div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow 
+          duration-300 overflow-hidden border border-gray-100">
+    <!-- En-tête avec statut -->
+    <div class="p-6">
+        <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-semibold text-gray-800 hover:text-blue-600 cursor-pointer">
+                {{project.title}}
+            </h3>
+            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                Ouvert
+            </span>
+        </div>
+        
+        <!-- Description courte -->
+        <p class="text-gray-600 mb-4 line-clamp-2">
+            {{project.description|truncatechars:40}}
+        </p>
+        
+        <!-- Compétences requises -->
+        <div class="flex flex-wrap gap-2 mb-4">
+            {% for skill in project.skills_required.all %}
+            <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm">{{skill.name}}</span>
+            {% endfor %}
+        </div>
+        
+        <!-- Infos budget/délai -->
+        <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+            <div class="flex items-center">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Budget: <span class="font-semibold text-gray-900">800-1200€</span>
+            </div>
+            <div class="flex items-center">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                Délai: <span class="font-semibold text-gray-900">3 semaines</span>
+            </div>
+        </div>
+        
+        <!-- Footer avec client et propositions -->
+        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+            <div class="flex items-center">
+                <img class="w-8 h-8 rounded-full object-cover" src="https://randomuser.me/api/portraits/men/32.jpg" alt="">
+                <div class="ml-2">
+                    <p class="text-sm font-medium text-gray-900">Thomas Martin</p>
+                    <p class="text-xs text-gray-500">Client depuis 2023</p>
+                </div>
+            </div>
+            <span class="text-sm text-gray-500">12 propositions</span>
+        </div>
+    </div>
+    
+    <!-- Bouton postuler (visible seulement si pas encore postulé) -->
+   {% if user.user_types == 'freelance' %}
+    <div class="px-6 py-4 bg-gray-50 border-t border-gray-100">
+        <a href="{% url 'jobs:create_proposal' project.pk %}" 
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white 
+                    font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+            Postuler à ce projet
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+    {% endfor %}
+
+  </div>
+</section>
+
+        
+   
+
+{% endblock %}

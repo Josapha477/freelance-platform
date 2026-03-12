@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon SaaS</title>
+    <script src="./browser@4.js"></script>
+</head>
+<body class="min-h-screen bg-white">
+    {% extends 'base.html' %}
+
+{% block title %}Freelance Connect - Trouvez votre prochaine mission{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION PREMIUM -->
+<section class="relative overflow-hidden rounded-3xl mb-16 bg-gradient-to-br from-indigo-600 via-blue-600 to-purple-600 text-white">
+
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/20 backdrop-blur-sm"></div>
+
+    <div class="relative z-10 text-center px-6 py-20">
+        <h1 class="text-5xl font-extrabold mb-6 leading-tight">
+            La plateforme nouvelle génération<br>
+            <span class="text-indigo-200">pour freelances ambitieux</span>
+        </h1>
+
+        <p class="text-lg text-indigo-100 max-w-2xl mx-auto mb-10">
+            Trouvez des projets de qualité, collaborez avec des clients sérieux et développez votre carrière freelance.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="{% url 'explorer' %}"
+               class="bg-white text-indigo-600 px-8 py-3 rounded-xl font-semibold shadow-lg hover:scale-105 transition duration-300">
+                🚀 Explorer les projets
+            </a>
+
+            <a href="{% url 'publier_projet' %}"
+               class="bg-indigo-800/40 border border-white/30 px-8 py-3 rounded-xl font-semibold hover:bg-indigo-800/60 transition">
+                💼 Publier un projet
+            </a>
+        </div>
+
+        <!-- Social proof -->
+        <div class="mt-12 flex justify-center gap-10 text-sm text-indigo-200">
+            <div>
+                <p class="text-2xl font-bold text-white">+2 500</p>
+                Projets publiés
+            </div>
+            <div>
+                <p class="text-2xl font-bold text-white">+1 200</p>
+                Freelances actifs
+            </div>
+            <div>
+                <p class="text-2xl font-bold text-white">98%</p>
+                Clients satisfaits
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- SECTION FILTRES MODERNE -->
+<div class="mb-10">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Explorer par catégorie</h2>
+
+    <div class="flex flex-wrap gap-3">
+        <button class="px-5 py-2 bg-indigo-600 text-white rounded-full text-sm shadow hover:scale-105 transition">
+            Tous
+        </button>
+        <button class="px-5 py-2 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition">
+            💻 Développement
+        </button>
+        <button class="px-5 py-2 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition">
+            🎨 Design
+        </button>
+        <button class="px-5 py-2 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition">
+            ✍️ Rédaction
+        </button>
+        <button class="px-5 py-2 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition">
+            📈 Marketing
+        </button>
+    </div>
+</div>
+
+
+<!-- SECTION PROJETS -->
+<div class="mb-6 flex justify-between items-center">
+    <h2 class="text-2xl font-bold text-gray-900">
+        Projets récents
+    </h2>
+    <a href="{% url 'explorer' %}" class="text-indigo-600 font-semibold hover:underline">
+        Voir tout →
+    </a>
+</div>
+
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+    {% for projet in projets_recents %}
+    <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 border border-gray-100 flex flex-col">
+
+        <div class="p-6 flex flex-col flex-grow">
+
+            <!-- Statut & Date -->
+            <div class="flex justify-between items-center mb-4">
+                <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
+                    {{ projet.get_statut_display }}
+                </span>
+                <span class="text-xs text-gray-400">
+                    {{ projet.date_publication|timesince }} ago
+                </span>
+            </div>
+
+            <!-- Titre -->
+            <h3 class="text-lg font-bold text-gray-900 mb-2 hover:text-indigo-600 transition">
+                {{ projet.titre }}
+            </h3>
+
+            <!-- Description -->
+            <p class="text-gray-600 text-sm mb-4 flex-grow">
+                {{ projet.description|truncatechars:120 }}
+            </p>
+
+            <!-- Compétences -->
+            <div class="flex flex-wrap gap-2 mb-5">
+                {% for tag in projet.competences.all|slice:":3" %}
+                <span class="px-2 py-1 bg-indigo-50 text-indigo-600 rounded-md text-xs font-medium">
+                    {{ tag.nom }}
+                </span>
+                {% endfor %}
+
+                {% if projet.competences.count > 3 %}
+                <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded-md text-xs">
+                    +{{ projet.competences.count|add:"-3" }}
+                </span>
+                {% endif %}
+            </div>
+
+            <!-- Footer card -->
+            <div class="border-t pt-4 mt-auto flex justify-between items-center">
+
+                <div>
+                    <p class="text-xs text-gray-400">Budget</p>
+                    <p class="text-lg font-bold text-indigo-600">
+                        {{ projet.budget }} €
+                    </p>
+                </div>
+
+                <div class="text-right">
+                    <p class="text-xs text-gray-400">Propositions</p>
+                    <p class="text-lg font-semibold text-gray-700">
+                        {{ projet.nb_propositions }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <a href="{% url 'detail_projet' projet.id %}"
+               class="mt-5 block text-center bg-indigo-600 text-white py-2 rounded-lg font-medium hover:bg-indigo-700 transition">
+                Voir le projet
+            </a>
+
+        </div>
+    </div>
+
+    {% empty %}
+    <div class="col-span-full text-center py-20">
+        <div class="text-6xl mb-4">🚀</div>
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">
+            Aucun projet disponible pour le moment
+        </h3>
+        <p class="text-gray-500 mb-6">
+            Soyez le premier à publier une mission.
+        </p>
+        <a href="{% url 'publier_projet' %}"
+           class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition">
+            Publier un projet
+        </a>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+        
+</body>
+</html>

@@ -1,0 +1,137 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} plateform freelance {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+    <script src="{% static 'js/browser@4.js' %}"></script>
+    {% block extra_css %} 
+    
+    {% endblock %}
+</head>
+<body>
+
+   <!-- <header class="fixed top-0 w-full text-white
+    bg-opacity-100 shadow z-50 bg-white/0 backdrop-blur-md border-b bodrder-whith/20 ">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+         -->
+         <nav class="fixed top-0 w-full overflow-hidden
+                bg-opacity-100 shadow z-50 bg-white/0 
+                backdrop-blur-md border-b bodrder-whith/20">
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <a href="/" class="text-2xl font-bold text-indigo-600 cursor-pointer">
+                            Freelance
+                        </a>
+                    </div>
+                    
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:flex items-center space-x-4">
+                            {% if user.is_authenticated %}
+                            <a href="/" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">
+                                Accueil
+                            </a>
+                            {% if user.user_types == "freelance" %}
+                            <a href="/dashboard_freelance/" class="text-gray-700
+                             hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">
+                                Dashboard
+                            </a>
+                            {% else %}
+                            <a href="/dashboard_client/" class="text-gray-700
+                             hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">
+                                Dashboard
+                            </a>
+                            <a href="/create_project/" class="text-gray-700 block w-full text-left 
+                             hover:text-indigo-600 px-3 py-2 
+                             rounded-md text-sm font-medium hover:bg-gray-50">Publier un projet</a>
+                            {% endif %}
+                            <a href="/list_project">
+                                Project
+                            </a>
+                            <a href="#">freelance</a>
+                            <a href="/accounts/logout" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium">
+                                Déconnexion
+                            </a>
+                            <a href="/message" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                               Message
+                            </a>
+                            {% else %}
+                            <a href="/accounts/login" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">
+                                Connexion
+                            </a>
+                            <a href="/accounts/signup" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                                Inscription
+                            </a>
+                            {% endif %}
+                    </div>
+                     <!-- Mobile menu button -->
+                    <div class="md:hidden flex items-center" id="menu-toggle">
+                        <button class="text-gray-700 hover:text-indigo-600 focus:outline-none">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path id="mypath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                                <!-- <path stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> -->
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden md:hidden" id="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                        {% if user.is_authenticated %}
+                        <a href="/" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">
+                            Accueil
+                        </a>
+                         {% if user.user_types == "freelance" %}
+                            <a href="/dashboard_freelance/" class="text-gray-700 block w-full text-left 
+                             hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50">
+                                Dashboard
+                            </a>
+                            {% else %}
+                            <a href="/dashboard_client/" class="text-gray-700 block w-full text-left 
+                             hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50">
+                                Dashboard
+                            </a>
+                            <a href="/create_project/" class="text-gray-700 block w-full text-left 
+                             hover:text-indigo-600 px-3 py-2 
+                             rounded-md text-sm font-medium hover:bg-gray-50">Publier un projet</a>
+                            {% endif %}
+                        <a href="/accounts/logout" class="block w-full text-left 
+                        px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-gray-50">
+                            Déconnexion
+                        </a>
+                        {% else %}
+                        <a href="/accounts/login" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">
+                            Connexion
+                        </a>
+                        <a href="/accounts/signup" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">
+                            Inscription
+                        </a>
+                        {% endif %}
+                </div>
+            </div>
+        </nav>
+   <!-- </header> -->
+
+    <main class="">
+        {% block content %}
+
+
+        {% endblock %}
+        
+    </main>
+    <button id="toggleMode"class="z-20 bg-blue-500 fixed bottom-20 right-20 border-none text-white rounded pointer-events-auto ">
+           
+    </button>
+
+    {% block extra_js%}
+  
+    {% endblock %}
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
